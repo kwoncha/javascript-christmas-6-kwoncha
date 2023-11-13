@@ -14,20 +14,16 @@ class MenuCalculation {
   }
 
   getCalculateTotalOrder(dividedMenuAndAmount) {
-    let orderedPrice = 0;
-    dividedMenuAndAmount.forEach(menuAndAmount => {
+    return dividedMenuAndAmount.reduce((orderedPrice, menuAndAmount) => {
       const menuName = menuAndAmount[MENUNAME];
       const menuQuantity = +menuAndAmount[MENUAMOUNT];
 
-      for (let category in MENU) {
-        if (menuName in MENU[category]) {
-          orderedPrice += MENU[category][menuName] * menuQuantity;
-          break;
-        }
-      }
-    });
+      const menuPrice = Object.keys(MENU).reduce((price, category) => {
+        return menuName in MENU[category] ? MENU[category][menuName] * menuQuantity : price;
+      }, 0);
 
-    return orderedPrice;
+      return orderedPrice + menuPrice;
+    }, 0);
   }
 }
 
