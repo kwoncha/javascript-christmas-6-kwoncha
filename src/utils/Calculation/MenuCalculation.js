@@ -1,4 +1,4 @@
-import { MENUNAME, MENUAMOUNT, MENU } from '../../constants/constants.js';
+import { NUMBER, MENU } from '../../constants/constants.js';
 
 class MenuCalculation {
   #menu = new Map();
@@ -15,8 +15,8 @@ class MenuCalculation {
 
   getCalculateTotalOrder(dividedMenuAndAmount) {
     return dividedMenuAndAmount.reduce((orderedPrice, menuAndAmount) => {
-      const menuName = menuAndAmount[MENUNAME];
-      const menuQuantity = +menuAndAmount[MENUAMOUNT];
+      const menuName = menuAndAmount[NUMBER.menuName];
+      const menuQuantity = +menuAndAmount[NUMBER.menuAmount];
 
       const menuPrice = Object.keys(MENU).reduce((price, category) => {
         return menuName in MENU[category] ? MENU[category][menuName] * menuQuantity : price;
@@ -24,6 +24,10 @@ class MenuCalculation {
 
       return orderedPrice + menuPrice;
     }, 0);
+  }
+
+  getChristmasDistcount(date) {
+    return
   }
 }
 

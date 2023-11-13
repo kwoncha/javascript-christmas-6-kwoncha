@@ -4,9 +4,14 @@ const DEC_DATE = /^(?:[1-9]|[12]\d|3[01])$/;
 
 const ORDERED_MENU = /^[가-힣a-zA-Z\s]+-\d+$/;
 
-const MENUNAME = 0;
-
-const MENUAMOUNT = 1;
+const NUMBER = deepFreeze({
+  menuName: 0,
+  menuAmount: 1,
+  thousandDiscount: 1000,
+  dDayDiscount: 100,
+  weekdayDiscount: 2023,
+  weekendDiscount: 2023,
+});
 
 const MENU = deepFreeze({
   appetizer: {
@@ -31,4 +36,4 @@ const MENU = deepFreeze({
   },
 });
 
-export { DEC_DATE, MENU, ORDERED_MENU, MENUNAME, MENUAMOUNT };
+export { DEC_DATE, MENU, ORDERED_MENU, NUMBER };
