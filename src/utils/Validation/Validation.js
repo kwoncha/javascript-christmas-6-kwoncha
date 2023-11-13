@@ -13,6 +13,24 @@ class Validation {
 
     const dividedMenuOrderAndAmount = MenuCalculation.getProcessIndividualOrder(inputMenus);
     this.isValidMenuIncluded(dividedMenuOrderAndAmount);
+    this.isDrinkOnlyOrder(dividedMenuOrderAndAmount);
+    this.isOrderValid();
+  }
+
+  isOrderValid() {
+    const totalItems = this.menuCalculation.getTotalOrderedItems();
+
+    if (totalItems > NUMBER.maximumOrder) throw new Error(MESSAGE.ERROR.tooManyItems);
+    if (totalItems === NUMBER.minimumOrder) throw new Error(MESSAGE.ERROR.noItemsOrdered);
+  }
+
+  isDrinkOnlyOrder(dividedMenuAndAmount) {
+    const isOnlyDrink = dividedMenuAndAmount.every(menuAndAmount => {
+      const menuName = menuAndAmount[NUMBER.menuName];
+      return Object.keys(MENU.drink).includes(menuName);
+    });
+
+    if (isOnlyDrink) throw new Error(MESSAGE.ERROR.drinksOnlyOrder);
   }
 
   isValidReservationDate(dividedMenuArray) {

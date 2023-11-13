@@ -19,6 +19,9 @@ const MESSAGE = deepFreeze({
     notValidDate: `${PREFIX} 정확한 날짜를 입력해주세요.`,
     notValidMenuInput: `${PREFIX} 메뉴와 수량을 정확히 입력해주세요.`,
     noValidMenuIncluded: `${PREFIX} 메뉴판에 있는 메뉴를 입력해주세요.`,
+    drinksOnlyOrder: `${PREFIX} 음료만 주문 할 수 없습니다.`,
+    tooManyItems: `${PREFIX} 최대 20개만 주문 할 수 있습니다.`,
+    noItemsOrdered: `${PREFIX} 최소 1개이상 주문해주세요.`,
   },
 });
 

@@ -11,6 +11,15 @@ const NUMBER = deepFreeze({
   dDayDiscount: 100,
   weekdayDiscount: 2023,
   weekendDiscount: 2023,
+  firstDay: 1,
+  minimumOrder: 0,
+  maximumOrder: 20,
+  minimumOrderPrice: 10000,
+});
+
+const CALENDAR = deepFreeze({
+  weekendDay: [1, 2, 8, 9, 15, 16, 22, 23, 29, 30],
+  starDay: [3, 10, 17, 24, 25, 31],
 });
 
 const MENU = deepFreeze({
@@ -36,4 +45,4 @@ const MENU = deepFreeze({
   },
 });
 
-export { DEC_DATE, MENU, ORDERED_MENU, NUMBER };
+export { DEC_DATE, MENU, ORDERED_MENU, NUMBER, CALENDAR };
