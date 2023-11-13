@@ -10,11 +10,24 @@ class Validation {
   isValidMenuOrder(inputMenus) {
     const dividedMenuArray = MenuCalculation.getdDvideMenuOrders(inputMenus);
     this.isValidReservationDate(dividedMenuArray);
+
+    const dividedMenuOrderAndAmount = MenuCalculation.getProcessIndividualOrder(inputMenus);
+    this.isValidMenuIncluded(dividedMenuOrderAndAmount);
   }
 
   isValidReservationDate(dividedMenuArray) {
     dividedMenuArray.forEach(menu => {
       if (!this.isValidMenuType(menu)) throw new Error(MESSAGE.notValidMenuInput);
+    });
+  }
+
+  isValidMenuIncluded(dividedMenuOrderAndAmount) {
+    dividedMenuOrderAndAmount.forEach(menuArray => {
+      const menuName = menuArray[MENU.menuName];
+
+      if (!MENU[menuName]) {
+        throw new Error(MESSAGE.noValidMenuIncluded);
+      }
     });
   }
 
