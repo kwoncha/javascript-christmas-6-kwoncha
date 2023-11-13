@@ -1,8 +1,8 @@
-import deepFreeze from '../utils/deepFreeze/deepFreeze';
+import deepFreeze from '../utils/deepFreeze/deepFreeze.js';
 
 const DEC_DATE = /^(?:[1-9]|[12]\d|3[01])$/;
 
-const ORDERED_MENU = /^[가-힣a-zA-Z\s]+-\d+$/;
+const ORDERED_MENU = /^[가-힣]+-\d+$/;
 
 const NUMBER = deepFreeze({
   menuName: 0,
