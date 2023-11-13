@@ -75,7 +75,24 @@ class MenuCalculation {
   applyDiscounts(date) {
     let discount = 0;
     discount += this.applyChristmasDiscount(date);
+    discount += this.applyWeekdayAndWeekendDiscount(date);
+
+    if (CALENDAR.starDay.includes(date)) {
+      discount += NUMBER.thousandDiscount;
+    }
+
     return discount;
+  }
+
+  applyWeekdayAndWeekendDiscount(date) {
+    return CALENDAR.weekendDay.includes(date) ?
+      this.calculateCategoryDiscount('main', NUMBER.weekendDiscount) :
+      this.calculateCategoryDiscount('dessert', NUMBER.weekdayDiscount);
+  }
+
+  calculateCategoryDiscount(category, discountPerItem) {
+    return Object.keys(this.#orderedMenu[category])
+      .reduce((discount, menuName) => discount + this.#orderedMenu[category][menuName] * discountPerItem, 0);
   }
 }
 
