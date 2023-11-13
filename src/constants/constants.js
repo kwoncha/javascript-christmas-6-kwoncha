@@ -18,6 +18,9 @@ const NUMBER = deepFreeze({
   minimumChampagne: 120000,
   champagnePrice: 25000,
   zero: 0,
+  start: 5000,
+  tree: 10000,
+  santa: 20000,
 });
 
 const CALENDAR = deepFreeze({
