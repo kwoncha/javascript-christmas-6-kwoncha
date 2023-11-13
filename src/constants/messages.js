@@ -22,6 +22,9 @@ const MESSAGE = deepFreeze({
   amountAfterDiscountDetails: amount => `${amount}원`,
   eventBadge: '<12월 이벤트 배지>',
   nothing: '없음',
+  santa: '산타',
+  tree: '트리',
+  star: '별',
   ERROR: {
     notValidDate: `${PREFIX} 정확한 날짜를 입력해주세요.`,
     notValidMenuInput: `${PREFIX} 메뉴와 수량을 정확히 입력해주세요.`,
