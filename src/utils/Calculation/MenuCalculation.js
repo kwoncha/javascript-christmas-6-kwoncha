@@ -48,6 +48,7 @@ class MenuCalculation {
 
   updateOrderedMenu(menuName, quantity) {
     Object.keys(this.#orderedMenu).forEach(category => {
+
       if (menuName in MENU[category]) {
         this.#orderedMenu[category][menuName] += quantity;
         return;
@@ -57,12 +58,24 @@ class MenuCalculation {
 
   getCalculateTotalOrder() {
     let orderedPrice = 0;
+
     Object.keys(this.#orderedMenu).forEach(category => {
       Object.keys(this.#orderedMenu[category]).forEach(menuName => {
         orderedPrice += MENU[category][menuName] * this.#orderedMenu[category][menuName];
       });
     });
+
     return orderedPrice;
+  }
+
+  applyChristmasDiscount(date) {
+    return NUMBER.thousandDiscount + (date - NUMBER.firstDay) * NUMBER.dDayDiscount
+  }
+
+  applyDiscounts(date) {
+    let discount = 0;
+    discount += this.applyChristmasDiscount(date);
+    return discount;
   }
 }
 
