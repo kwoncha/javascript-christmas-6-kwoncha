@@ -1,5 +1,5 @@
 import { DEC_DATE, ORDERED_MENU, MENU, NUMBER } from '../../constants/constants.js';
-import { MESSAGE } from '../../constants/messages.js';
+import MESSAGE from '../../constants/messages.js';
 import MenuCalculation from '../Calculation/MenuCalculation.js';
 
 class Validation {

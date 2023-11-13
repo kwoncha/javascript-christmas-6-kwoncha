@@ -1,4 +1,5 @@
 import { MESSAGE } from './constants/messages';
+import { NUMBER } from './constants/constants';
 import InputView from './utils/Views/InputView';
 import Validation from './utils/Validation/Validation';
 import OutputView from './utils/Views/OutputView';
@@ -12,7 +13,13 @@ class ChristmasEvent {
   async startOrder() {
     const reservedDate = await this.getReservationDate();
     const reservedOrder = await this.getReservationOrder();
+    const reservedOrderList = this.menuCalculation.getProcessIndividualOrder(reservedOrder);
     const totalOrderPrice = this.menuCalculation.getCalculateTotalOrder(reservedOrder);
+
+    if (totalOrderPrice >= NUMBER.minimumOrderPrice) {
+      const discountAmount = this.menuCalculation.applyDiscounts(reservedDate);
+      const applyEventBadge = this.menuCalculation.applyEventBadge(discountAmount);
+    }
   }
 
   async getReservationDate() {
@@ -40,6 +47,8 @@ class ChristmasEvent {
       return this.getReservationOrder();
     }
   }
+
+  printapplyEvent
 }
 
 export default ChristmasEvent;

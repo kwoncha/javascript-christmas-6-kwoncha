@@ -108,8 +108,7 @@ class MenuCalculation {
       .reduce((discount, menuName) => discount + this.#orderedMenu[category][menuName] * discountPerItem, NUMBER.zero);
   }
 
-  applyEventBadge(date) {
-    const totalDiscountAmount = this.applyDiscounts(date);
+  applyEventBadge(totalDiscountAmount) {
     if (totalDiscountAmount < NUMBER.star) this.#eventBadge = MESSAGE.nothing;
     if (NUMBER.star <= totalDiscountAmount && totalDiscountAmount < NUMBER.tree) this.#eventBadge = MESSAGE.star;
     if (NUMBER.tree <= totalDiscountAmount && totalDiscountAmount < NUMBER.santa) this.#eventBadge = MESSAGE.tree;
