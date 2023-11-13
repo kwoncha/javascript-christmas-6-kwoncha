@@ -1,5 +1,13 @@
+import ChristmasEvent from './ChristmasEvent';
+
 class App {
-  async run() {}
+  constructor() {
+    this.christmasEvent = new ChristmasEvent();
+  }
+
+  async run() {
+    await this.christmasEvent.startOrder();
+  }
 }
 
 export default App;
