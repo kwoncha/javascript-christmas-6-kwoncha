@@ -4,33 +4,33 @@ class MenuCalculation {
   #menu = new Map();
   #orderedMenu = {
     appetizer: {
-      양송이수프: 0,
-      타파스: 0,
-      시저샐러드: 0,
+      양송이수프: NUMBER.zero,
+      타파스: NUMBER.zero,
+      시저샐러드: NUMBER.zero,
     },
     main: {
-      티본스테이크: 0,
-      바비큐립: 0,
-      해산물파스타: 0,
-      크리스마스파스타: 0,
+      티본스테이크: NUMBER.zero,
+      바비큐립: NUMBER.zero,
+      해산물파스타: NUMBER.zero,
+      크리스마스파스타: NUMBER.zero,
     },
     dessert: {
-      초코케이크: 0,
-      아이스크림: 0,
+      초코케이크: NUMBER.zero,
+      아이스크림: NUMBER.zero,
     },
     drink: {
-      제로콜라: 0,
-      레드와인: 0,
-      샴페인: 0,
+      제로콜라: NUMBER.zero,
+      레드와인: NUMBER.zero,
+      샴페인: NUMBER.zero,
     },
   }
 
   #discountList = {
-    dDayDiscount: 0,
-    weekDayDiscount: 0,
-    weekendDiscount: 0,
-    starDiscount: 0,
-    champagnePresent: 0,
+    dDayDiscount: NUMBER.zero,
+    weekDayDiscount: NUMBER.zero,
+    weekendDiscount: NUMBER.zero,
+    starDiscount: NUMBER.zero,
+    champagnePresent: NUMBER.zero,
   }
 
   getdDvideMenuOrders(inputMenus) {
@@ -50,8 +50,8 @@ class MenuCalculation {
 
   getTotalOrderedItems() {
     return Object.keys(this.#orderedMenu).reduce((total, category) => {
-      return total + Object.values(this.#orderedMenu[category]).reduce((subTotal, quantity) => subTotal + quantity, 0);
-    }, 0);
+      return total + Object.values(this.#orderedMenu[category]).reduce((subTotal, quantity) => subTotal + quantity, NUMBER.zero);
+    }, NUMBER.zero);
   }
 
   updateOrderedMenu(menuName, quantity) {
@@ -65,7 +65,7 @@ class MenuCalculation {
   }
 
   getCalculateTotalOrder() {
-    let orderedPrice = 0;
+    let orderedPrice = NUMBER.zero;
 
     Object.keys(this.#orderedMenu).forEach(category => {
       Object.keys(this.#orderedMenu[category]).forEach(menuName => {
@@ -89,7 +89,7 @@ class MenuCalculation {
 
     return Object.keys(this.#discountList).reduce((totalDiscount, discountType) => {
       return totalDiscount + this.#discountList[discountType];
-    }, 0);
+    }, NUMBER.zero);
   }
 
   applyWeekdayAndWeekendDiscount(date) {
@@ -103,7 +103,7 @@ class MenuCalculation {
 
   calculateCategoryDiscount(category, discountPerItem) {
     return Object.keys(this.#orderedMenu[category])
-      .reduce((discount, menuName) => discount + this.#orderedMenu[category][menuName] * discountPerItem, 0);
+      .reduce((discount, menuName) => discount + this.#orderedMenu[category][menuName] * discountPerItem, NUMBER.zero);
   }
 }
 

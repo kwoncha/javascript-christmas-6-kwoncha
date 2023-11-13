@@ -15,6 +15,9 @@ const NUMBER = deepFreeze({
   minimumOrder: 0,
   maximumOrder: 20,
   minimumOrderPrice: 10000,
+  minimumChampagne: 120000,
+  champagnePrice: 25000,
+  zero: 0,
 });
 
 const CALENDAR = deepFreeze({
