@@ -25,6 +25,14 @@ class MenuCalculation {
     },
   }
 
+  #discountList = {
+    dDayDiscount: 0,
+    weekDayDiscount: 0,
+    weekendDiscount: 0,
+    starDiscount: 0,
+    champagnePresent: 0,
+  }
+
   getdDvideMenuOrders(inputMenus) {
     return this.#menu(inputMenus.split(','));
   }
@@ -69,25 +77,28 @@ class MenuCalculation {
   }
 
   applyChristmasDiscount(date) {
-    return NUMBER.thousandDiscount + (date - NUMBER.firstDay) * NUMBER.dDayDiscount
+    this.#discountList[dDayDiscount] += NUMBER.thousandDiscount + (date - NUMBER.firstDay) * NUMBER.dDayDiscount
   }
 
   applyDiscounts(date) {
-    let discount = 0;
-    discount += this.applyChristmasDiscount(date);
-    discount += this.applyWeekdayAndWeekendDiscount(date);
+    this.applyChristmasDiscount(date);
+    this.applyWeekdayAndWeekendDiscount(date);
 
-    if (CALENDAR.starDay.includes(date)) {
-      discount += NUMBER.thousandDiscount;
-    }
+    if (CALENDAR.starDay.includes(date)) this.#discountList[starDiscount] += NUMBER.thousandDiscount;
+    if (this.getCalculateTotalOrder() >= NUMBER.minimumChampagne) this.#discountList[champagnePresent] += NUMBER.champagnePrice;
 
-    return discount;
+    return Object.keys(this.#discountList).reduce((totalDiscount, discountType) => {
+      return totalDiscount + this.#discountList[discountType];
+    }, 0);
   }
 
   applyWeekdayAndWeekendDiscount(date) {
-    return CALENDAR.weekendDay.includes(date) ?
-      this.calculateCategoryDiscount('main', NUMBER.weekendDiscount) :
-      this.calculateCategoryDiscount('dessert', NUMBER.weekdayDiscount);
+    if (CALENDAR.weekendDay.includes(date)) {
+      this.#discountList[weekendDiscount] += this.calculateCategoryDiscount('main', NUMBER.weekendDiscount);
+      return;
+    }
+
+    this.#discountList[weekdayDiscount] += this.calculateCategoryDiscount('dessert', NUMBER.weekdayDiscount);
   }
 
   calculateCategoryDiscount(category, discountPerItem) {
