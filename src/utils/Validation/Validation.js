@@ -1,4 +1,4 @@
-import { DEC_DATE, ORDERED_MENU, MENU } from '../../constants/constants.js';
+import { DEC_DATE, ORDERED_MENU, MENU, MENUNAME } from '../../constants/constants.js';
 import { MESSAGE } from '../../constants/messages.js';
 import MenuCalculation from '../Calculation/MenuCalculation.js';
 
@@ -22,11 +22,12 @@ class Validation {
   }
 
   isValidMenuIncluded(dividedMenuOrderAndAmount) {
-    dividedMenuOrderAndAmount.forEach(menuArray => {
-      const menuName = menuArray[MENU.menuName];
+    dividedMenuOrderAndAmount.forEach(menuAndAmount => {
+      const menuName = menuAndAmount[MENUNAME];
+      const isMenuValid = Object.keys(MENU).some(category => menuName in MENU[category]);
 
-      if (!MENU[menuName]) {
-        throw new Error(MESSAGE.noValidMenuIncluded);
+      if (!isMenuValid) {
+        throw new Error(MESSAGE.ERROR.noValidMenuIncluded);
       }
     });
   }

@@ -1,3 +1,5 @@
+import { MENUNAME, MENUAMOUNT, MENU } from '../../constants/constants.js';
+
 class MenuCalculation {
   #menu = new Map();
 
@@ -12,11 +14,17 @@ class MenuCalculation {
   }
 
   getCalculateTotalOrder(dividedMenuAndAmount) {
-    const individualOrder = dividedMenuAndAmount;
-
     let orderedPrice = 0;
-    individualOrder.forEach(menuAndAmount => {
-      orderedPrice += MENU[menuAndAmount[MENU.menuName]] * +menuAndAmount[MENU.menuAmount];
+    dividedMenuAndAmount.forEach(menuAndAmount => {
+      const menuName = menuAndAmount[MENUNAME];
+      const menuQuantity = +menuAndAmount[MENUAMOUNT];
+
+      for (let category in MENU) {
+        if (menuName in MENU[category]) {
+          orderedPrice += MENU[category][menuName] * menuQuantity;
+          break;
+        }
+      }
     });
 
     return orderedPrice;
