@@ -33,6 +33,8 @@ class MenuCalculation {
     champagnePresent: NUMBER.zero,
   }
 
+  #eventBadge;
+
   getdDvideMenuOrders(inputMenus) {
     return this.#menu(inputMenus.split(','));
   }
@@ -104,6 +106,16 @@ class MenuCalculation {
   calculateCategoryDiscount(category, discountPerItem) {
     return Object.keys(this.#orderedMenu[category])
       .reduce((discount, menuName) => discount + this.#orderedMenu[category][menuName] * discountPerItem, NUMBER.zero);
+  }
+
+  applyEventBadge(date) {
+    const totalDiscountAmount = this.applyDiscounts(date);
+    if (totalDiscountAmount < NUMBER.star) this.#eventBadge = MESSAGE.nothing;
+    if (NUMBER.star <= totalDiscountAmount && totalDiscountAmount < NUMBER.tree) this.#eventBadge = MESSAGE.star;
+    if (NUMBER.tree <= totalDiscountAmount && totalDiscountAmount < NUMBER.santa) this.#eventBadge = MESSAGE.tree;
+    if (NUMBER.santa <= totalDiscountAmount) this.#eventBadge = MESSAGE.santa;
+
+    return this.#eventBadge;
   }
 }
 
