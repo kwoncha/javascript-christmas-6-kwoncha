@@ -1,11 +1,13 @@
-import { MESSAGE } from './constants/messages';
-import { NUMBER } from './constants/constants';
-import InputView from './utils/Views/InputView';
-import Validation from './utils/Validation/Validation';
-import OutputView from './utils/Views/OutputView';
-import MenuCalculation from './utils/Calculation/MenuCalculation';
+import MESSAGE from './constants/messages.js';
+import { NUMBER } from './constants/constants.js';
+import InputView from './utils/Views/InputView.js';
+import Validation from './utils/Validation/Validation.js';
+import OutputView from './utils/Views/OutputView.js';
+import MenuCalculation from './utils/Calculation/MenuCalculation.js';
 
 class ChristmasEvent {
+  #orderedMenuList = [];
+
   constructor() {
     this.menuCalculation = new MenuCalculation();
   }
@@ -20,6 +22,9 @@ class ChristmasEvent {
       const discountAmount = this.menuCalculation.applyDiscounts(reservedDate);
       const applyEventBadge = this.menuCalculation.applyEventBadge(discountAmount);
     }
+
+    OutputView.print(MESSAGE.benefitList(reservedDate));
+    this.printOrderMenuList(reservedOrderList);
   }
 
   async getReservationDate() {
@@ -48,7 +53,32 @@ class ChristmasEvent {
     }
   }
 
-  printapplyEvent
+  printOrderMenuList(reservedOrderList) {
+    this.updateOrderMenuList(reservedOrderList);
+    this.printOrderMenu();
+  }
+
+  printOrderMenu() {
+    OutputView.print(MESSAGE.orderMenu);
+    this.#orderedMenuList.forEach(menu => {
+      const [menuName, menuAmount] = menu;
+      OutputView.print(MESSAGE.itemizedBill(menuName, menuAmount));
+    })
+  }
+
+  updateOrderMenuList(reservedOrderList) {
+    Object.keys(reservedOrderList).forEach(category => {
+      this.updateCategoryInOrderMenuList(category);
+    })
+  }
+
+  updateCategoryInOrderMenuList(category, reservedOrderList) {
+    Object.keys(category).forEach(menuName => {
+      if (menuName in reservedOrderList[category]) {
+        this.#orderedMenuList.push([menuName, reservedOrderList[category][menuName]]);
+      }
+    })
+  }
 }
 
 export default ChristmasEvent;
