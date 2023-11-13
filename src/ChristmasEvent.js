@@ -12,6 +12,7 @@ class ChristmasEvent {
   async startOrder() {
     const reservedDate = await this.getReservationDate();
     const reservedOrder = await this.getReservationOrder();
+    const totalOrderPrice = this.menuCalculation.getCalculateTotalOrder(reservedOrder);
   }
 
   async getReservationDate() {
@@ -19,7 +20,7 @@ class ChristmasEvent {
     try {
       Validation.isValidDecemberDate(inputDate);
 
-      return inputDate;
+      return +inputDate;
     } catch (error) {
       OutputView.print(error.message);
 
