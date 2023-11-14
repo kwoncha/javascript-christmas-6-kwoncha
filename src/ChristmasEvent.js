@@ -26,7 +26,8 @@ class ChristmasEvent {
     const discountList = this.menuCalculation.setDiscountList();
 
     OutputView.print(MESSAGE.benefitList(reservedDate));
-    this.printOrderMenuList(reservedOrderList);
+    this.updateOrderMenuList(reservedOrderList);
+    OutputView.printOrderMenu(this.#orderedMenuList);
     OutputView.printTotalOrderPrice(this.formatNumberToCurrency(totalOrderPrice));
     OutputView.printGiftMenu(discountList);
   }
@@ -56,13 +57,6 @@ class ChristmasEvent {
 
       return this.getReservationOrder();
     }
-  }
-
-  printOrderMenuList(orderedMenuObject) {
-    this.updateOrderMenuList(orderedMenuObject);
-    const orderedMenuList = this.#orderedMenuList;
-
-    OutputView.printOrderMenu(orderedMenuList);
   }
 
   updateOrderMenuList(orderedMenuObject) {
