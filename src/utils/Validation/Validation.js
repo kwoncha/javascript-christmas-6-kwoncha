@@ -22,12 +22,12 @@ class Validation {
     const dividedMenuOrderAndAmount =
       this.menuCalculation.getProcessIndividualOrder(dividedMenuArray);
     this.isDrinkOnlyOrder(dividedMenuOrderAndAmount);
-    this.isOrderValid(dividedMenuArray);
+    this.isOrderQuantityValid(dividedMenuArray);
 
     return dividedMenuOrderAndAmount;
   }
 
-  isOrderValid() {
+  isOrderQuantityValid() {
     const totalItems = this.menuCalculation.getTotalOrderedItems();
 
     if (totalItems > NUMBER.maximumOrder) throw new Error(MESSAGE.ERROR.tooManyItems);
