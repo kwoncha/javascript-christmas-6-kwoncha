@@ -44,6 +44,7 @@ class ChristmasEvent {
 
   async getReservationDate() {
     const inputDate = await InputView.readLineAsync(MESSAGE.visitDate);
+
     try {
       this.validation.isValidDecemberDate(inputDate);
 
@@ -57,6 +58,7 @@ class ChristmasEvent {
 
   async getReservationOrder() {
     const inputOrder = await InputView.readLineAsync(MESSAGE.menuOrderQuestion);
+
     try {
       const orderedMenu = this.validation.isValidMenuOrder(inputOrder);
       this.menuCalculation.setUpdateOrderedMenu(orderedMenu);
@@ -87,6 +89,7 @@ class ChristmasEvent {
     Object.entries(list).forEach(([benefitDetail, discountAmount]) => {
       if (discountAmount !== 0) {
         const discountName = DISCOUNT[benefitDetail];
+
         this.#benefitDetails.push([discountName, this.formatNumberToCurrency(discountAmount)]);
       }
     })

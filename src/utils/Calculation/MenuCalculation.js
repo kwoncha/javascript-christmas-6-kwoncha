@@ -56,6 +56,7 @@ class MenuCalculation {
 
     menuArray.forEach(menu => {
       const [menuName, quantity] = menu.split('-');
+
       this.updateOrderedMenu(menuName, +quantity);
     });
 
@@ -64,6 +65,7 @@ class MenuCalculation {
 
   getTotalOrderedItems() {
     return Object.keys(this.#orderedMenu).reduce((total, category) => {
+
       return total + Object.values(this.#orderedMenu[category]).reduce((subTotal, quantity) => subTotal + quantity, NUMBER.zero);
     }, NUMBER.zero);
   }
@@ -104,6 +106,7 @@ class MenuCalculation {
     if (this.#totalOrderPrice >= NUMBER.minimumChampagne) this.#discountList.champagnePresent += NUMBER.champagnePrice;
 
     return Object.keys(this.#discountList).reduce((totalDiscount, discountType) => {
+
       return totalDiscount + this.#discountList[`${discountType}`];
     }, NUMBER.zero);
   }

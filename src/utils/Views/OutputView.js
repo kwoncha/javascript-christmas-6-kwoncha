@@ -10,6 +10,7 @@ const OutputView = {
     MissionUtils.Console.print(MESSAGE.orderMenu);
     orderedMenuList.forEach(menu => {
       const [menuName, menuAmount] = menu;
+
       MissionUtils.Console.print(MESSAGE.itemizedBill(menuName, menuAmount));
     });
   },
@@ -21,6 +22,7 @@ const OutputView = {
 
   printGiftMenu(discountList) {
     MissionUtils.Console.print(MESSAGE.giftMenu);
+
     if (discountList.champagnePresent !== 0) {
       MissionUtils.Console.print(MESSAGE.giftMenuDtails);
       return;

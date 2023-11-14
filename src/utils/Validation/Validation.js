@@ -12,17 +12,17 @@ class Validation {
   }
 
   isValidMenuOrder(inputMenus) {
-    let dividedMenuArray = [inputMenus];
+    let dividedInputMenuArray = [inputMenus];
     if (this.isIncludedComma(inputMenus))
-      dividedMenuArray = this.menuCalculation.getdivideMenuOrders(inputMenus);
+      dividedInputMenuArray = this.menuCalculation.getdivideMenuOrders(inputMenus);
 
-    this.isValidMenuAndAmount(dividedMenuArray);
-    this.isValidMenuIncludedInMenu(dividedMenuArray, MENU);
+    this.isValidMenuAndAmount(dividedInputMenuArray);
+    this.isValidMenuIncludedInMenu(dividedInputMenuArray, MENU);
 
     const dividedMenuOrderAndAmount =
-      this.menuCalculation.getProcessIndividualOrder(dividedMenuArray);
+      this.menuCalculation.getProcessIndividualOrder(dividedInputMenuArray);
     this.isDrinkOnlyOrder(dividedMenuOrderAndAmount);
-    this.isOrderQuantityValid(dividedMenuArray);
+    this.isOrderQuantityValid(dividedInputMenuArray);
 
     return dividedMenuOrderAndAmount;
   }
@@ -46,32 +46,32 @@ class Validation {
     if (!hasNonDrinkItem) throw new Error(MESSAGE.ERROR.drinksOnlyOrder);
   }
 
-  isValidMenuAndAmount(dividedMenuArray) {
-    const menuArray = this.menuCalculation.checkSingleMenuOrder(dividedMenuArray);
+  isValidMenuAndAmount(dividedInputMenu) {
+    const checkedMenuItems = this.menuCalculation.checkSingleMenuOrder(dividedInputMenu);
 
-    menuArray.forEach(menu => {
+    checkedMenuItems.forEach(menu => {
       if (!this.isValidMenuType(menu)) throw new Error(MESSAGE.ERROR.notValidMenuInput);
     });
   }
 
-  isValidMenuIncludedInMenu(dividedMenuArray, menulist) {
+  isValidMenuIncludedInMenu(dividedInputMenu, menulist) {
     const orderedMenu = [];
-    const menuArray = this.menuCalculation.checkSingleMenuOrder(dividedMenuArray);
+    const checkedMenuItems = this.menuCalculation.checkSingleMenuOrder(dividedInputMenu);
 
-    menuArray.forEach(menu => {
+    checkedMenuItems.forEach(menu => {
       const [menuName, _] = menu.split('-');
       orderedMenu.push(menuName);
 
       this.isValidMenuIncluded(menuName, menulist);
     });
 
-    this.isMenuAlreadyIncluded(dividedMenuArray, orderedMenu);
+    this.isMenuAlreadyIncluded(dividedInputMenu, orderedMenu);
   }
 
-  isMenuAlreadyIncluded(dividedMenuArray, orderMenuList) {
+  isMenuAlreadyIncluded(dividedInputMenu, orderMenuList) {
     const setOrderMenuList = new Set(orderMenuList);
 
-    if (setOrderMenuList.size !== dividedMenuArray.length)
+    if (setOrderMenuList.size !== dividedInputMenu.length)
       throw new Error(MESSAGE.ERROR.notValidMenuInput);
   }
 
