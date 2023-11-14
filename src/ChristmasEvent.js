@@ -16,7 +16,7 @@ class ChristmasEvent {
   async startOrder() {
     const reservedDate = await this.getReservationDate();
     const reservedOrderList = await this.getReservationOrder();
-    const totalOrderPrice = this.menuCalculation.getCalculateTotalOrder(reservedOrderList);
+    const totalOrderPrice = this.menuCalculation.getCalculateTotalOrder();
 
     if (totalOrderPrice >= NUMBER.minimumOrderPrice) {
       const discountAmount = this.menuCalculation.applyDiscounts(reservedDate);
@@ -25,6 +25,7 @@ class ChristmasEvent {
 
     OutputView.print(MESSAGE.benefitList(reservedDate));
     this.printOrderMenuList(reservedOrderList);
+    OutputView.printTotalOrderPrice(this.formatNumberToCurrency(totalOrderPrice));
   }
 
   async getReservationDate() {
@@ -44,6 +45,7 @@ class ChristmasEvent {
     const inputOrder = await InputView.readLineAsync(MESSAGE.menuOrderQuestion);
     try {
       const orderedMenu = this.validation.isValidMenuOrder(inputOrder);
+      this.menuCalculation.setUpdateOrderedMenu(orderedMenu);
 
       return orderedMenu;
     } catch (error) {
@@ -78,6 +80,10 @@ class ChristmasEvent {
         this.#orderedMenuList.push([menuName, orderedMenuObject[category][menuName]]);
       }
     });
+  }
+
+  formatNumberToCurrency(number) {
+    return number.toLocaleString('ko-KR');
   }
 }
 
