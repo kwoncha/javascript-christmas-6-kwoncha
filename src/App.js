@@ -1,4 +1,4 @@
-import ChristmasEvent from './ChristmasEvent';
+import ChristmasEvent from './ChristmasEvent.js';
 
 class App {
   constructor() {
