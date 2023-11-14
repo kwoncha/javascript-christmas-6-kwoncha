@@ -28,15 +28,17 @@ class ChristmasEvent {
     }
 
     const discountList = this.menuCalculation.setDiscountList();
+    this.updateOrderMenuList(reservedOrderList);
+    this.updateBenefitDetails(discountList);
+    const amountAfterDiscount = this.menuCalculation.calculateTotalAmount(totalOrderPrice, discountAmount);
 
     OutputView.print(MESSAGE.benefitList(reservedDate));
-    this.updateOrderMenuList(reservedOrderList);
     OutputView.printOrderMenu(this.#orderedMenuList);
     OutputView.printTotalOrderPrice(this.formatNumberToCurrency(totalOrderPrice));
     OutputView.printGiftMenu(discountList);
-    this.updateBenefitDetails(discountList);
     OutputView.printBenefitList(this.#benefitDetails);
-    OutputView.printTotalBenefitAmount(this.formatNumberToCurrency(discountAmount))
+    OutputView.printTotalBenefitAmount(this.formatNumberToCurrency(discountAmount));
+    OutputView.printamountAfterDiscount(this.formatNumberToCurrency(amountAfterDiscount));
   }
 
   async getReservationDate() {

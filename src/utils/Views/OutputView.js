@@ -54,6 +54,11 @@ const OutputView = {
 
     MissionUtils.Console.print(MESSAGE.noBenefit);
   },
+
+  printamountAfterDiscount(finalCharge) {
+    MissionUtils.Console.print(MESSAGE.amountAfterDiscount);
+    MissionUtils.Console.print(MESSAGE.amountAfterDiscountDetails(finalCharge));
+  },
 };
 
 export default OutputView;
