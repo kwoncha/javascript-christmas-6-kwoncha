@@ -13,10 +13,8 @@ class Validation {
 
   isValidMenuOrder(inputMenus) {
     let dividedMenuArray = [inputMenus];
-
-    if (this.isIncludedComma(inputMenus)) {
+    if (this.isIncludedComma(inputMenus))
       dividedMenuArray = this.menuCalculation.getdivideMenuOrders(inputMenus);
-    }
 
     this.isValidReservationDate(dividedMenuArray);
     this.isValidMenuIncludedInMenu(dividedMenuArray, MENU);
@@ -25,6 +23,8 @@ class Validation {
       this.menuCalculation.getProcessIndividualOrder(dividedMenuArray);
     this.isDrinkOnlyOrder(dividedMenuOrderAndAmount);
     this.isOrderValid();
+
+    return dividedMenuOrderAndAmount;
   }
 
   isOrderValid() {

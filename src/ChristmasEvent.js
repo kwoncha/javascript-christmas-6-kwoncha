@@ -43,9 +43,9 @@ class ChristmasEvent {
   async getReservationOrder() {
     const inputOrder = await InputView.readLineAsync(MESSAGE.menuOrderQuestion);
     try {
-      this.validation.isValidMenuOrder(inputOrder);
+      const orderedMenu = this.validation.isValidMenuOrder(inputOrder);
 
-      return this.menuCalculation.getProcessIndividualOrder(inputOrder);;
+      return orderedMenu;
     } catch (error) {
       OutputView.print(error.message);
 
@@ -53,8 +53,8 @@ class ChristmasEvent {
     }
   }
 
-  printOrderMenuList(reservedOrderList) {
-    this.updateOrderMenuList(reservedOrderList);
+  printOrderMenuList(orderedMenuObject) {
+    this.updateOrderMenuList(orderedMenuObject);
     this.printOrderMenu();
   }
 
@@ -66,18 +66,18 @@ class ChristmasEvent {
     })
   }
 
-  updateOrderMenuList(reservedOrderList) {
-    Object.keys(reservedOrderList).forEach(category => {
-      this.updateCategoryInOrderMenuList(category, reservedOrderList);
+  updateOrderMenuList(orderedMenuObject) {
+    Object.keys(orderedMenuObject).forEach(category => {
+      this.updateCategoryInOrderMenuList(category, orderedMenuObject);
     })
   }
 
-  updateCategoryInOrderMenuList(category, reservedOrderList) {
-    Object.keys(category).forEach(menuName => {
-      if (menuName in reservedOrderList[category]) {
-        this.#orderedMenuList.push([menuName, reservedOrderList[category][menuName]]);
+  updateCategoryInOrderMenuList(category, orderedMenuObject) {
+    Object.keys(orderedMenuObject[category]).forEach(menuName => {
+      if (orderedMenuObject[category][menuName] !== 0) {
+        this.#orderedMenuList.push([menuName, orderedMenuObject[category][menuName]]);
       }
-    })
+    });
   }
 }
 
