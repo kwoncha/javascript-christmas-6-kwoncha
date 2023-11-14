@@ -59,6 +59,17 @@ const OutputView = {
     MissionUtils.Console.print(MESSAGE.amountAfterDiscount);
     MissionUtils.Console.print(MESSAGE.amountAfterDiscountDetails(finalCharge));
   },
+
+  printEventBadge(badge) {
+    MissionUtils.Console.print(MESSAGE.eventBadge);
+
+    if (!badge) {
+      MissionUtils.Console.print(MESSAGE.nothing);
+      return;
+    }
+
+    MissionUtils.Console.print(badge);
+  },
 };
 
 export default OutputView;

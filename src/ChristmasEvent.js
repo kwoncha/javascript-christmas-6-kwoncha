@@ -39,6 +39,7 @@ class ChristmasEvent {
     OutputView.printBenefitList(this.#benefitDetails);
     OutputView.printTotalBenefitAmount(discountAmount, this.formatNumberToCurrency(discountAmount));
     OutputView.printamountAfterDiscount(this.formatNumberToCurrency(amountAfterDiscount));
+    OutputView.printEventBadge(applyEventBadge);
   }
 
   async getReservationDate() {
