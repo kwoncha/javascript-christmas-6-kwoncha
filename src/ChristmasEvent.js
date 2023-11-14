@@ -23,9 +23,12 @@ class ChristmasEvent {
       const applyEventBadge = this.menuCalculation.applyEventBadge(discountAmount);
     }
 
+    const discountList = this.menuCalculation.setDiscountList();
+
     OutputView.print(MESSAGE.benefitList(reservedDate));
     this.printOrderMenuList(reservedOrderList);
     OutputView.printTotalOrderPrice(this.formatNumberToCurrency(totalOrderPrice));
+    OutputView.printGiftMenu(discountList);
   }
 
   async getReservationDate() {
@@ -57,15 +60,9 @@ class ChristmasEvent {
 
   printOrderMenuList(orderedMenuObject) {
     this.updateOrderMenuList(orderedMenuObject);
-    this.printOrderMenu();
-  }
+    const orderedMenuList = this.#orderedMenuList;
 
-  printOrderMenu() {
-    OutputView.print(MESSAGE.orderMenu);
-    this.#orderedMenuList.forEach(menu => {
-      const [menuName, menuAmount] = menu;
-      OutputView.print(MESSAGE.itemizedBill(menuName, menuAmount));
-    })
+    OutputView.printOrderMenu(orderedMenuList);
   }
 
   updateOrderMenuList(orderedMenuObject) {
