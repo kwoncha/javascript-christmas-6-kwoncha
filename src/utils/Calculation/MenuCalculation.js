@@ -1,5 +1,5 @@
 import { NUMBER, MENU, CALENDAR } from '../../constants/constants.js';
-import Validation from '../Validation/Validation.js';
+import MESSAGE from '../../constants/messages.js';
 
 class MenuCalculation {
   #orderedMenu = {
@@ -34,6 +34,8 @@ class MenuCalculation {
   }
 
   #eventBadge;
+
+  #totalOrderPrice;
 
   getdivideMenuOrders(inputMenus) {
     return inputMenus.split(',');
@@ -85,32 +87,34 @@ class MenuCalculation {
       });
     });
 
-    return orderedPrice;
+    this.#totalOrderPrice = orderedPrice;
+
+    return this.#totalOrderPrice;
   }
 
   applyChristmasDiscount(date) {
-    this.#discountList[dDayDiscount] += NUMBER.thousandDiscount + (date - NUMBER.firstDay) * NUMBER.dDayDiscount
+    this.#discountList['dDayDiscount'] += NUMBER.thousandDiscount + (date - NUMBER.firstDay) * NUMBER.dDayDiscount
   }
 
   applyDiscounts(date) {
     this.applyChristmasDiscount(date);
     this.applyWeekdayAndWeekendDiscount(date);
 
-    if (CALENDAR.starDay.includes(date)) this.#discountList[starDiscount] += NUMBER.thousandDiscount;
-    if (this.getCalculateTotalOrder() >= NUMBER.minimumChampagne) this.#discountList[champagnePresent] += NUMBER.champagnePrice;
+    if (CALENDAR.starDay.includes(date)) this.#discountList['starDiscount'] += NUMBER.thousandDiscount;
+    if (this.#totalOrderPrice >= NUMBER.minimumChampagne) this.#discountList['champagnePresent'] += NUMBER.champagnePrice;
 
     return Object.keys(this.#discountList).reduce((totalDiscount, discountType) => {
-      return totalDiscount + this.#discountList[discountType];
+      return totalDiscount + this.#discountList[`${discountType}`];
     }, NUMBER.zero);
   }
 
   applyWeekdayAndWeekendDiscount(date) {
     if (CALENDAR.weekendDay.includes(date)) {
-      this.#discountList[weekendDiscount] += this.calculateCategoryDiscount('main', NUMBER.weekendDiscount);
+      this.#discountList['weekendDiscount'] += this.calculateCategoryDiscount('main', NUMBER.weekendDiscount);
       return;
     }
 
-    this.#discountList[weekdayDiscount] += this.calculateCategoryDiscount('dessert', NUMBER.weekdayDiscount);
+    this.#discountList['weekdayDiscount'] += this.calculateCategoryDiscount('dessert', NUMBER.weekdayDiscount);
   }
 
   calculateCategoryDiscount(category, discountPerItem) {
@@ -125,6 +129,10 @@ class MenuCalculation {
     if (NUMBER.santa <= totalDiscountAmount) this.#eventBadge = MESSAGE.santa;
 
     return this.#eventBadge;
+  }
+
+  setUpdateOrderedMenu(orderedMenu) {
+    this.#orderedMenu = { ...orderedMenu };
   }
 }
 
