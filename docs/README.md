@@ -393,3 +393,70 @@ app.run();
 - [ ] **Git의 커밋 단위는 앞 단계에서 `docs/README.md`에 정리한 기능 목록 단위**로 추가한다.
   - [커밋 메시지 컨벤션] 가이드를 참고해 커밋 메시지를 작성한다.
 - [ ] 과제 진행 및 제출 방법은 [프리코스 과제 제출] 문서를 참고한다.
+
+## 도메인 로직에 대한 설명
+
+---
+
+- class ChristmasEvent
+
+  - 전체적인 크리스마스 이벤트 작동 class
+  - `startOrder`
+    - 날짜 입력 및 메뉴 입력을 받음
+    - 받은 데이터로 전반적인 계산 작동을 통해서 출력까지 작동 시킴
+  - `getReservationDate`
+    - 날짜를 입력 받고 입력 받은 데이터를 검사
+    - 검사 도중 일치 하지 않으면 재귀를 통해 반복
+  - `getReservationOrder`
+    - 메뉴를 입력 받고 입력 받은 데이터를 검사
+    - 검사 도중 일치 하지 않으면 재귀를 통해 반복
+  - `applyDiscountsAndBadge`
+    - 입력 받은 데이터들을 이벤트 적용 금액일 시 이벤트 할인 적용
+  - `updateOrderMenuList, updateCategoryInOrderMenuList`
+    - 주문 메뉴를 한번에 출력 할 수 있도록 array에 update함
+  - `printTotalChristmasEventProcess`
+    - 이벤트에 대한 내용을 순차적으로 출력
+  - `formatNumberToCurrency`
+    - 출력하기 전 숫자를 원 단위로 변경
+
+- class ChristmasEvent
+
+  - 전체적 계산 담당 class
+  - `checkSingleMenuOrder`
+    - 단일 메뉴인지 확인
+    - 메뉴는 `,` 로 분할하는데, split의 에러를 불러 올 수 있기 때문
+  - `getProcessIndividualOrder`
+    - 메뉴와 수량을 필드에 업데이트 및 반환
+  - `getTotalOrderedItems, updateOrderedMenu`
+    - 주문된 메뉴 수량 계산 및 반환
+  - `getCalculateTotalOrder`
+    - 총 주문 금액 계산 및 반환
+  - `updateOrderMenuList, updateCategoryInOrderMenuList`
+    - 주문 메뉴를 한번에 출력 할 수 있도록 array에 update함
+  - `applyChristmasDiscount`
+    - 크리스마스 할인 계산
+    - 필드에 업데이트
+  - `applyWeekdayAndWeekendDiscount`
+    - 평일 주말 할인 계산
+    - 필드에 업데이트
+  - `applyEventBadge`
+    - 이벤트 배지 적용 및 반환
+
+- class Validation
+  - 유효한 값인지 검사하는 class
+  - `isValidDecemberDate`
+    - 입력 받은 날짜가 유효한지 검사
+  - `isValidMenuOrder`
+    - 메뉴에 대한 통합 검사를 실시
+    - 검사가 모두 통과할 시 메뉴를 `return`
+  - `isOrderQuantityValid`
+    - 주문 수량이 1개 이상 인지 검사
+    - 최대 주문 수량을 넘지 않는지 검사
+  - `isDrinkOnlyOrder`
+    - 음료만 주문하는지 검사
+  - `isValidMenuAndAmount`
+    - 입력 받은 주문이 주문 형식에 맞는지 검사
+  - `isMenuAlreadyIncluded`
+    - 동일한 메뉴가 여러번 주문 됐는지 검사
+  - `isValidMenuIncluded`
+    - 메뉴가 메뉴판에 있는지 검사
