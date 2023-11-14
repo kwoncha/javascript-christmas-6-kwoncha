@@ -18,28 +18,17 @@ class ChristmasEvent {
   async startOrder() {
     const reservedDate = await this.getReservationDate();
     const reservedOrderList = await this.getReservationOrder();
-    const totalOrderPrice = this.menuCalculation.getCalculateTotalOrder();
-    let discountAmount = 0;
-    let applyEventBadge;
-
-    if (totalOrderPrice >= NUMBER.minimumOrderPrice) {
-      discountAmount = this.menuCalculation.applyDiscounts(reservedDate);
-      applyEventBadge = this.menuCalculation.applyEventBadge(discountAmount);
-    }
+    const { totalOrderPrice, discountAmount, applyEventBadge } = await this.applyDiscountsAndBadge(reservedDate);
 
     const discountList = this.menuCalculation.setDiscountList();
     this.updateOrderMenuList(reservedOrderList);
     this.updateBenefitDetails(discountList);
     const amountAfterDiscount = this.menuCalculation.calculateTotalAmount(totalOrderPrice, discountAmount);
 
-    OutputView.print(MESSAGE.benefitList(reservedDate));
-    OutputView.printOrderMenu(this.#orderedMenuList);
-    OutputView.printTotalOrderPrice(this.formatNumberToCurrency(totalOrderPrice));
-    OutputView.printGiftMenu(discountList);
-    OutputView.printBenefitList(this.#benefitDetails);
-    OutputView.printTotalBenefitAmount(discountAmount, this.formatNumberToCurrency(discountAmount));
-    OutputView.printamountAfterDiscount(this.formatNumberToCurrency(amountAfterDiscount));
-    OutputView.printEventBadge(applyEventBadge);
+    this.printTotalChristmasEventProcess(
+      reservedDate, totalOrderPrice, discountList,
+      discountAmount, amountAfterDiscount, applyEventBadge
+    )
   }
 
   async getReservationDate() {
@@ -71,6 +60,19 @@ class ChristmasEvent {
     }
   }
 
+  async applyDiscountsAndBadge(reservedDate) {
+    const totalOrderPrice = this.menuCalculation.getCalculateTotalOrder();
+    let discountAmount = 0;
+    let applyEventBadge;
+
+    if (totalOrderPrice >= NUMBER.minimumOrderPrice) {
+      discountAmount = this.menuCalculation.applyDiscounts(reservedDate);
+      applyEventBadge = this.menuCalculation.applyEventBadge(discountAmount);
+    }
+
+    return { totalOrderPrice, discountAmount, applyEventBadge };
+  }
+
   updateOrderMenuList(orderedMenuObject) {
     Object.keys(orderedMenuObject).forEach(category => {
       this.updateCategoryInOrderMenuList(category, orderedMenuObject);
@@ -93,6 +95,17 @@ class ChristmasEvent {
         this.#benefitDetails.push([discountName, this.formatNumberToCurrency(discountAmount)]);
       }
     })
+  }
+
+  printTotalChristmasEventProcess(reservedDate, totalOrderPrice, discountList, discountAmount, amountAfterDiscount, applyEventBadge) {
+    OutputView.print(MESSAGE.benefitList(reservedDate));
+    OutputView.printOrderMenu(this.#orderedMenuList);
+    OutputView.printTotalOrderPrice(this.formatNumberToCurrency(totalOrderPrice));
+    OutputView.printGiftMenu(discountList);
+    OutputView.printBenefitList(this.#benefitDetails);
+    OutputView.printTotalBenefitAmount(discountAmount, this.formatNumberToCurrency(discountAmount));
+    OutputView.printamountAfterDiscount(this.formatNumberToCurrency(amountAfterDiscount));
+    OutputView.printEventBadge(applyEventBadge);
   }
 
   formatNumberToCurrency(number) {
