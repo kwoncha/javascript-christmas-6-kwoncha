@@ -23,6 +23,11 @@ const NUMBER = deepFreeze({
   santa: 20000,
 });
 
+const DISCOUNT = deepFreeze({
+  discountMain: 'main',
+  discoutnDessert: 'dessert',
+});
+
 const CALENDAR = deepFreeze({
   weekendDay: [1, 2, 8, 9, 15, 16, 22, 23, 29, 30],
   starDay: [3, 10, 17, 24, 25, 31],
@@ -51,4 +56,4 @@ const MENU = deepFreeze({
   },
 });
 
-export { DEC_DATE, MENU, ORDERED_MENU, NUMBER, CALENDAR };
+export { DEC_DATE, MENU, ORDERED_MENU, NUMBER, CALENDAR, DISCOUNT };

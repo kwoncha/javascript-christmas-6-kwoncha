@@ -1,4 +1,4 @@
-import { NUMBER, MENU, CALENDAR } from '../../constants/constants.js';
+import { NUMBER, MENU, CALENDAR, DISCOUNT } from '../../constants/constants.js';
 import MESSAGE from '../../constants/messages.js';
 
 class MenuCalculation {
@@ -93,15 +93,15 @@ class MenuCalculation {
   }
 
   applyChristmasDiscount(date) {
-    this.#discountList['dDayDiscount'] += NUMBER.thousandDiscount + (date - NUMBER.firstDay) * NUMBER.dDayDiscount
+    this.#discountList.dDayDiscount += NUMBER.thousandDiscount + (date - NUMBER.firstDay) * NUMBER.dDayDiscount
   }
 
   applyDiscounts(date) {
     this.applyChristmasDiscount(date);
     this.applyWeekdayAndWeekendDiscount(date);
 
-    if (CALENDAR.starDay.includes(date)) this.#discountList['starDiscount'] += NUMBER.thousandDiscount;
-    if (this.#totalOrderPrice >= NUMBER.minimumChampagne) this.#discountList['champagnePresent'] += NUMBER.champagnePrice;
+    if (CALENDAR.starDay.includes(date)) this.#discountList.starDiscount += NUMBER.thousandDiscount;
+    if (this.#totalOrderPrice >= NUMBER.minimumChampagne) this.#discountList.champagnePresent += NUMBER.champagnePrice;
 
     return Object.keys(this.#discountList).reduce((totalDiscount, discountType) => {
       return totalDiscount + this.#discountList[`${discountType}`];
@@ -110,11 +110,11 @@ class MenuCalculation {
 
   applyWeekdayAndWeekendDiscount(date) {
     if (CALENDAR.weekendDay.includes(date)) {
-      this.#discountList['weekendDiscount'] += this.calculateCategoryDiscount('main', NUMBER.weekendDiscount);
+      this.#discountList.weekendDiscount += this.calculateCategoryDiscount(DISCOUNT.discountMain, NUMBER.weekendDiscount);
       return;
     }
 
-    this.#discountList['weekdayDiscount'] += this.calculateCategoryDiscount('dessert', NUMBER.weekdayDiscount);
+    this.#discountList.weekdayDiscount += this.calculateCategoryDiscount(DISCOUNT.discountDessert, NUMBER.weekdayDiscount);
   }
 
   calculateCategoryDiscount(category, discountPerItem) {
@@ -133,6 +133,10 @@ class MenuCalculation {
 
   setUpdateOrderedMenu(orderedMenu) {
     this.#orderedMenu = { ...orderedMenu };
+  }
+
+  setDiscountList() {
+    return this.#discountList;
   }
 }
 
