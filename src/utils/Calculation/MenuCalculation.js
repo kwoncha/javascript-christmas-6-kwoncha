@@ -138,6 +138,10 @@ class MenuCalculation {
   setDiscountList() {
     return this.#discountList;
   }
+
+  calculateTotalAmount(totalAmount, discountAmount) {
+    return totalAmount - discountAmount;
+  }
 }
 
 export default MenuCalculation;

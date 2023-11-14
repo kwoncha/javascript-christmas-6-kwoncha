@@ -19,10 +19,10 @@ class Validation {
     this.isValidMenuAndAmount(dividedMenuArray);
     this.isValidMenuIncludedInMenu(dividedMenuArray, MENU);
 
-    const dividedMenuOrderAndAmount
-      = this.menuCalculation.getProcessIndividualOrder(dividedMenuArray);
+    const dividedMenuOrderAndAmount =
+      this.menuCalculation.getProcessIndividualOrder(dividedMenuArray);
     this.isDrinkOnlyOrder(dividedMenuOrderAndAmount);
-    this.isOrderValid();
+    this.isOrderValid(dividedMenuArray);
 
     return dividedMenuOrderAndAmount;
   }
@@ -55,12 +55,24 @@ class Validation {
   }
 
   isValidMenuIncludedInMenu(dividedMenuArray, menulist) {
+    const orderedMenu = [];
     const menuArray = this.menuCalculation.checkSingleMenuOrder(dividedMenuArray);
 
     menuArray.forEach(menu => {
       const [menuName, _] = menu.split('-');
+      orderedMenu.push(menuName);
+
       this.isValidMenuIncluded(menuName, menulist);
     });
+
+    this.isMenuAlreadyIncluded(dividedMenuArray, orderedMenu);
+  }
+
+  isMenuAlreadyIncluded(dividedMenuArray, orderMenuList) {
+    const setOrderMenuList = new Set(orderMenuList);
+
+    if (setOrderMenuList.size !== dividedMenuArray.length)
+      throw new Error(MESSAGE.ERROR.notValidMenuInput);
   }
 
   isValidMenuIncluded(menuName, menu) {
@@ -72,7 +84,7 @@ class Validation {
       }
     });
 
-    if (!isMenuValid) throw new Error(MESSAGE.ERROR.noValidMenuIncluded);
+    if (!isMenuValid) throw new Error(MESSAGE.ERROR.notValidMenuInput);
   }
 
   isIncludedComma(inputMenus) {
