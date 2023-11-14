@@ -1,7 +1,7 @@
 import { NUMBER, MENU, CALENDAR } from '../../constants/constants.js';
+import Validation from '../Validation/Validation.js';
 
 class MenuCalculation {
-  #menu = new Map();
   #orderedMenu = {
     appetizer: {
       양송이수프: NUMBER.zero,
@@ -35,14 +35,24 @@ class MenuCalculation {
 
   #eventBadge;
 
-  getdDvideMenuOrders(inputMenus) {
-    return this.#menu(inputMenus.split(','));
+  getdivideMenuOrders(inputMenus) {
+    return inputMenus.split(',');
   }
 
-  getProcessIndividualOrder(inputMenus) {
-    const dividedMenuOrders = this.getdDvideMenuOrders(inputMenus);
+  checkSingleMenuOrder(menu) {
+    let menuArray = menu;
 
-    dividedMenuOrders.forEach(menu => {
+    if (menuArray.length > 1) {
+      menuArray = [...menu];
+    }
+
+    return menuArray;
+  }
+
+  getProcessIndividualOrder(dividedMenuOrders) {
+    const menuArray = this.checkSingleMenuOrder(dividedMenuOrders);
+
+    menuArray.forEach(menu => {
       const [menuName, quantity] = menu.split('-');
       this.updateOrderedMenu(menuName, +quantity);
     });

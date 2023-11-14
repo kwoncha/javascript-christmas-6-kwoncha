@@ -3,16 +3,26 @@ import MESSAGE from '../../constants/messages.js';
 import MenuCalculation from '../Calculation/MenuCalculation.js';
 
 class Validation {
+  constructor() {
+    this.menuCalculation = new MenuCalculation();
+  }
+
   isValidDecemberDate(date) {
     if (!this.isValidDateType(date)) throw new Error(MESSAGE.ERROR.notValidDate);
   }
 
   isValidMenuOrder(inputMenus) {
-    const dividedMenuArray = MenuCalculation.getdDvideMenuOrders(inputMenus);
-    this.isValidReservationDate(dividedMenuArray);
+    let dividedMenuArray = [inputMenus];
 
-    const dividedMenuOrderAndAmount = MenuCalculation.getProcessIndividualOrder(inputMenus);
-    this.isValidMenuIncluded(dividedMenuOrderAndAmount);
+    if (this.isIncludedComma(inputMenus)) {
+      dividedMenuArray = this.menuCalculation.getdivideMenuOrders(inputMenus);
+    }
+
+    this.isValidReservationDate(dividedMenuArray);
+    this.isValidMenuIncludedInMenu(dividedMenuArray, MENU);
+
+    const dividedMenuOrderAndAmount =
+      this.menuCalculation.getProcessIndividualOrder(dividedMenuArray);
     this.isDrinkOnlyOrder(dividedMenuOrderAndAmount);
     this.isOrderValid();
   }
@@ -24,30 +34,51 @@ class Validation {
     if (totalItems === NUMBER.minimumOrder) throw new Error(MESSAGE.ERROR.noItemsOrdered);
   }
 
-  isDrinkOnlyOrder(dividedMenuAndAmount) {
-    const isOnlyDrink = dividedMenuAndAmount.every(menuAndAmount => {
-      const menuName = menuAndAmount[NUMBER.menuName];
-      return Object.keys(MENU.drink).includes(menuName);
+  isDrinkOnlyOrder(dividedMenuOrderAndAmount) {
+    const hasNonDrinkItem = Object.keys(dividedMenuOrderAndAmount).some(category => {
+      if (category !== 'drink') {
+        return Object.values(dividedMenuOrderAndAmount[category]).some(quantity => quantity > 0);
+      }
+
+      return false;
     });
 
-    if (isOnlyDrink) throw new Error(MESSAGE.ERROR.drinksOnlyOrder);
+    if (!hasNonDrinkItem) throw new Error(MESSAGE.ERROR.drinksOnlyOrder);
   }
 
   isValidReservationDate(dividedMenuArray) {
-    dividedMenuArray.forEach(menu => {
-      if (!this.isValidMenuType(menu)) throw new Error(MESSAGE.notValidMenuInput);
+    const menuArray = this.menuCalculation.checkSingleMenuOrder(dividedMenuArray);
+
+    menuArray.forEach(menu => {
+      if (!this.isValidMenuType(menu)) throw new Error(MESSAGE.ERROR.notValidMenuInput);
     });
   }
 
-  isValidMenuIncluded(dividedMenuOrderAndAmount) {
-    dividedMenuOrderAndAmount.forEach(menuAndAmount => {
-      const menuName = menuAndAmount[NUMBER.menuName];
-      const isMenuValid = Object.keys(MENU).some(category => menuName in MENU[category]);
+  isValidMenuIncludedInMenu(dividedMenuArray, menulist) {
+    const menuArray = this.menuCalculation.checkSingleMenuOrder(dividedMenuArray);
 
-      if (!isMenuValid) {
-        throw new Error(MESSAGE.ERROR.noValidMenuIncluded);
+    menuArray.forEach(menu => {
+      const [menuName, _] = menu.split('-');
+      this.isValidMenuIncluded(menuName, menulist);
+    });
+  }
+
+  isValidMenuIncluded(menuName, menu) {
+    let isMenuValid = false;
+
+    Object.keys(menu).forEach(category => {
+      if (menuName in menu[category]) {
+        isMenuValid = true;
       }
     });
+
+    if (!isMenuValid) throw new Error(MESSAGE.ERROR.noValidMenuIncluded);
+  }
+
+  isIncludedComma(inputMenus) {
+    if (inputMenus.includes(',')) return true;
+
+    return false;
   }
 
   isValidMenuType(menu) {

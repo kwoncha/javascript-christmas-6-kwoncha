@@ -10,13 +10,13 @@ class ChristmasEvent {
 
   constructor() {
     this.menuCalculation = new MenuCalculation();
+    this.validation = new Validation();
   }
 
   async startOrder() {
     const reservedDate = await this.getReservationDate();
-    const reservedOrder = await this.getReservationOrder();
-    const reservedOrderList = this.menuCalculation.getProcessIndividualOrder(reservedOrder);
-    const totalOrderPrice = this.menuCalculation.getCalculateTotalOrder(reservedOrder);
+    const reservedOrderList = await this.getReservationOrder();
+    const totalOrderPrice = this.menuCalculation.getCalculateTotalOrder(reservedOrderList);
 
     if (totalOrderPrice >= NUMBER.minimumOrderPrice) {
       const discountAmount = this.menuCalculation.applyDiscounts(reservedDate);
@@ -30,7 +30,7 @@ class ChristmasEvent {
   async getReservationDate() {
     const inputDate = await InputView.readLineAsync(MESSAGE.visitDate);
     try {
-      Validation.isValidDecemberDate(inputDate);
+      this.validation.isValidDecemberDate(inputDate);
 
       return +inputDate;
     } catch (error) {
@@ -43,9 +43,9 @@ class ChristmasEvent {
   async getReservationOrder() {
     const inputOrder = await InputView.readLineAsync(MESSAGE.menuOrderQuestion);
     try {
-      Validation.isValidMenuOrder(inputOrder);
+      this.validation.isValidMenuOrder(inputOrder);
 
-      return this.menuCalculation.getProcessIndividualOrder(inputOrder);
+      return this.menuCalculation.getProcessIndividualOrder(inputOrder);;
     } catch (error) {
       OutputView.print(error.message);
 
@@ -68,7 +68,7 @@ class ChristmasEvent {
 
   updateOrderMenuList(reservedOrderList) {
     Object.keys(reservedOrderList).forEach(category => {
-      this.updateCategoryInOrderMenuList(category);
+      this.updateCategoryInOrderMenuList(category, reservedOrderList);
     })
   }
 
