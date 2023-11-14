@@ -25,7 +25,12 @@ const NUMBER = deepFreeze({
 
 const DISCOUNT = deepFreeze({
   discountMain: 'main',
-  discoutnDessert: 'dessert',
+  discountDessert: 'dessert',
+  dDayDiscount: '크리스마스 디데이 할인',
+  weekdayDiscount: '평일 할인',
+  weekendDiscount: '주말 할인',
+  starDiscount: '특별 할인',
+  champagnePresent: '증정 이벤트',
 });
 
 const CALENDAR = deepFreeze({

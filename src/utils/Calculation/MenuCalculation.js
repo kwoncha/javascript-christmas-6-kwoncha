@@ -27,7 +27,7 @@ class MenuCalculation {
 
   #discountList = {
     dDayDiscount: NUMBER.zero,
-    weekDayDiscount: NUMBER.zero,
+    weekdayDiscount: NUMBER.zero,
     weekendDiscount: NUMBER.zero,
     starDiscount: NUMBER.zero,
     champagnePresent: NUMBER.zero,
