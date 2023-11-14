@@ -19,10 +19,12 @@ class ChristmasEvent {
     const reservedDate = await this.getReservationDate();
     const reservedOrderList = await this.getReservationOrder();
     const totalOrderPrice = this.menuCalculation.getCalculateTotalOrder();
+    let discountAmount = 0;
+    let applyEventBadge;
 
     if (totalOrderPrice >= NUMBER.minimumOrderPrice) {
-      const discountAmount = this.menuCalculation.applyDiscounts(reservedDate);
-      const applyEventBadge = this.menuCalculation.applyEventBadge(discountAmount);
+      discountAmount = this.menuCalculation.applyDiscounts(reservedDate);
+      applyEventBadge = this.menuCalculation.applyEventBadge(discountAmount);
     }
 
     const discountList = this.menuCalculation.setDiscountList();
@@ -34,6 +36,7 @@ class ChristmasEvent {
     OutputView.printGiftMenu(discountList);
     this.updateBenefitDetails(discountList);
     OutputView.printBenefitList(this.#benefitDetails);
+    OutputView.printTotalBenefitAmount(this.formatNumberToCurrency(discountAmount))
   }
 
   async getReservationDate() {

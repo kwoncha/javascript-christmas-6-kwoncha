@@ -43,6 +43,17 @@ const OutputView = {
       MissionUtils.Console.print(MESSAGE.benefitDetailsDescription(benefitDetail, discountAmount));
     });
   },
+
+  printTotalBenefitAmount(discountAmount) {
+    MissionUtils.Console.print(MESSAGE.totalBenefitAmount);
+
+    if (discountAmount > 0) {
+      MissionUtils.Console.print(MESSAGE.totalBenefitAmountInfo(discountAmount));
+      return;
+    }
+
+    MissionUtils.Console.print(MESSAGE.noBenefit);
+  },
 };
 
 export default OutputView;

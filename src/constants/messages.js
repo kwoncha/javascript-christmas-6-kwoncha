@@ -17,7 +17,7 @@ const MESSAGE = deepFreeze({
   benefitDetails: '\n<혜택 내역>',
   benefitDetailsDescription: (benefit, amount) => `${benefit}: -${amount}원`,
   totalBenefitAmount: '\n<총혜택 금액>',
-  totalBenefitAmountInfo: benefit => `${benefit}원`,
+  totalBenefitAmountInfo: benefit => `-${benefit}원`,
   noBenefit: '0원',
   amountAfterDiscount: '\n<할인 후 예상 결제 금액>',
   amountAfterDiscountDetails: amount => `${amount}원`,
