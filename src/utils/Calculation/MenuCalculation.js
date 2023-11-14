@@ -33,8 +33,6 @@ class MenuCalculation {
     champagnePresent: NUMBER.zero,
   }
 
-  #eventBadge;
-
   #totalOrderPrice;
 
   getdivideMenuOrders(inputMenus) {
@@ -126,12 +124,14 @@ class MenuCalculation {
   }
 
   applyEventBadge(totalDiscountAmount) {
-    if (totalDiscountAmount < NUMBER.star) this.#eventBadge = MESSAGE.nothing;
-    if (NUMBER.star <= totalDiscountAmount && totalDiscountAmount < NUMBER.tree) this.#eventBadge = MESSAGE.star;
-    if (NUMBER.tree <= totalDiscountAmount && totalDiscountAmount < NUMBER.santa) this.#eventBadge = MESSAGE.tree;
-    if (NUMBER.santa <= totalDiscountAmount) this.#eventBadge = MESSAGE.santa;
+    let eventBadge;
 
-    return this.#eventBadge;
+    if (totalDiscountAmount < NUMBER.star) eventBadge = MESSAGE.nothing;
+    if (NUMBER.star <= totalDiscountAmount && totalDiscountAmount < NUMBER.tree) eventBadge = MESSAGE.star;
+    if (NUMBER.tree <= totalDiscountAmount && totalDiscountAmount < NUMBER.santa) eventBadge = MESSAGE.tree;
+    if (NUMBER.santa <= totalDiscountAmount) eventBadge = MESSAGE.santa;
+
+    return eventBadge;
   }
 
   setUpdateOrderedMenu(orderedMenu) {
