@@ -16,11 +16,11 @@ class Validation {
     if (this.isIncludedComma(inputMenus))
       dividedMenuArray = this.menuCalculation.getdivideMenuOrders(inputMenus);
 
-    this.isValidReservationDate(dividedMenuArray);
+    this.isValidMenuAndAmount(dividedMenuArray);
     this.isValidMenuIncludedInMenu(dividedMenuArray, MENU);
 
-    const dividedMenuOrderAndAmount =
-      this.menuCalculation.getProcessIndividualOrder(dividedMenuArray);
+    const dividedMenuOrderAndAmount
+      = this.menuCalculation.getProcessIndividualOrder(dividedMenuArray);
     this.isDrinkOnlyOrder(dividedMenuOrderAndAmount);
     this.isOrderValid();
 
@@ -46,7 +46,7 @@ class Validation {
     if (!hasNonDrinkItem) throw new Error(MESSAGE.ERROR.drinksOnlyOrder);
   }
 
-  isValidReservationDate(dividedMenuArray) {
+  isValidMenuAndAmount(dividedMenuArray) {
     const menuArray = this.menuCalculation.checkSingleMenuOrder(dividedMenuArray);
 
     menuArray.forEach(menu => {
