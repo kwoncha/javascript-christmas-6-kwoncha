@@ -28,6 +28,21 @@ const OutputView = {
 
     MissionUtils.Console.print(MESSAGE.nothing);
   },
+
+  printBenefitList(benefitDetails) {
+    MissionUtils.Console.print(MESSAGE.benefitDetails);
+
+    if (benefitDetails.length === 0) {
+      MissionUtils.Console.print(MESSAGE.nothing);
+      return;
+    }
+
+    benefitDetails.forEach(detail => {
+      const [benefitDetail, discountAmount] = detail;
+
+      MissionUtils.Console.print(MESSAGE.benefitDetailsDescription(benefitDetail, discountAmount));
+    });
+  },
 };
 
 export default OutputView;

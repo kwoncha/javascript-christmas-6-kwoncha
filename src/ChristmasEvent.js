@@ -1,5 +1,5 @@
 import MESSAGE from './constants/messages.js';
-import { NUMBER } from './constants/constants.js';
+import { DISCOUNT, NUMBER } from './constants/constants.js';
 import InputView from './utils/Views/InputView.js';
 import Validation from './utils/Validation/Validation.js';
 import OutputView from './utils/Views/OutputView.js';
@@ -7,6 +7,8 @@ import MenuCalculation from './utils/Calculation/MenuCalculation.js';
 
 class ChristmasEvent {
   #orderedMenuList = [];
+
+  #benefitDetails = [];
 
   constructor() {
     this.menuCalculation = new MenuCalculation();
@@ -30,6 +32,8 @@ class ChristmasEvent {
     OutputView.printOrderMenu(this.#orderedMenuList);
     OutputView.printTotalOrderPrice(this.formatNumberToCurrency(totalOrderPrice));
     OutputView.printGiftMenu(discountList);
+    this.updateBenefitDetails(discountList);
+    OutputView.printBenefitList(this.#benefitDetails);
   }
 
   async getReservationDate() {
@@ -71,6 +75,15 @@ class ChristmasEvent {
         this.#orderedMenuList.push([menuName, orderedMenuObject[category][menuName]]);
       }
     });
+  }
+
+  updateBenefitDetails(list) {
+    Object.entries(list).forEach(([benefitDetail, discountAmount]) => {
+      if (discountAmount !== 0) {
+        const discountName = DISCOUNT[benefitDetail];
+        this.#benefitDetails.push([discountName, this.formatNumberToCurrency(discountAmount)]);
+      }
+    })
   }
 
   formatNumberToCurrency(number) {
