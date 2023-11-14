@@ -44,11 +44,11 @@ const OutputView = {
     });
   },
 
-  printTotalBenefitAmount(discountAmount) {
+  printTotalBenefitAmount(discountAmountValue, discountAmountString) {
     MissionUtils.Console.print(MESSAGE.totalBenefitAmount);
 
-    if (discountAmount > 0) {
-      MissionUtils.Console.print(MESSAGE.totalBenefitAmountInfo(discountAmount));
+    if (discountAmountValue > 0) {
+      MissionUtils.Console.print(MESSAGE.totalBenefitAmountInfo(discountAmountString));
       return;
     }
 

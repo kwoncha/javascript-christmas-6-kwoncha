@@ -37,7 +37,7 @@ class ChristmasEvent {
     OutputView.printTotalOrderPrice(this.formatNumberToCurrency(totalOrderPrice));
     OutputView.printGiftMenu(discountList);
     OutputView.printBenefitList(this.#benefitDetails);
-    OutputView.printTotalBenefitAmount(this.formatNumberToCurrency(discountAmount));
+    OutputView.printTotalBenefitAmount(discountAmount, this.formatNumberToCurrency(discountAmount));
     OutputView.printamountAfterDiscount(this.formatNumberToCurrency(amountAfterDiscount));
   }
 
