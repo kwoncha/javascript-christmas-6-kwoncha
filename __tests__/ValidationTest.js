@@ -27,4 +27,21 @@ describe('유효값 확인 class 테스트', () => {
       expect(() => validation.isValidMenuAndAmount(inputs[0])).toThrowError('[ERROR]');
     },
   );
+
+  test('동일 메뉴가 주문될 시 예외 처리', () => {
+    const orderMenuList = [
+      ['아이스크림', '아이스크림'],
+      ['초코', '초코', '아이스'],
+    ];
+    const dividedInputMenu = [
+      ['아이스크림-2', '아이스크림-1'],
+      ['초코-1', '초코-2', '아이스-2'],
+    ];
+
+    dividedInputMenu.forEach((list, index) => {
+      expect(() => validation.isMenuAlreadyIncluded(list, orderMenuList[index])).toThrowError(
+        '[ERROR]',
+      );
+    });
+  });
 });
