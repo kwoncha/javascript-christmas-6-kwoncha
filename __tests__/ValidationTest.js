@@ -56,4 +56,13 @@ describe('유효값 확인 class 테스트', () => {
       expect(() => validation.isValidMenuIncluded(list, MENU)).toThrowError('[ERROR]');
     });
   });
+
+  test('comma가 포함된 문자열인지 확인하는 함수 테스트', () => {
+    const expected = [true, false];
+    const strings = ['1,2', '123'];
+
+    strings.forEach((string, index) => {
+      expect(validation.isIncludedComma(string)).toBe(expected[index]);
+    });
+  });
 });
