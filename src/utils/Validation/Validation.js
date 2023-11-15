@@ -12,9 +12,7 @@ class Validation {
   }
 
   isValidMenuOrder(inputMenus) {
-    let dividedInputMenuArray = [inputMenus];
-    if (this.isIncludedComma(inputMenus))
-      dividedInputMenuArray = this.menuCalculation.getdivideMenuOrders(inputMenus);
+    const dividedInputMenuArray = this.menuCalculation.getdivideMenuOrders(inputMenus);
 
     this.isValidMenuAndAmount(dividedInputMenuArray);
     this.isValidMenuIncludedInMenu(dividedInputMenuArray, MENU);
