@@ -50,9 +50,9 @@ class MenuCalculation {
   }
 
   getProcessIndividualOrder(dividedMenuOrders) {
-    const menuArray = this.checkSingleMenuOrder(dividedMenuOrders);
+    const orderedMenuArray = this.checkSingleMenuOrder(dividedMenuOrders);
 
-    menuArray.forEach(menu => {
+    orderedMenuArray.forEach(menu => {
       const [menuName, quantity] = menu.split('-');
 
       this.updateOrderedMenu(menuName, +quantity);
