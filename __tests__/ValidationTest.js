@@ -1,5 +1,6 @@
 import { MissionUtils } from '@woowacourse/mission-utils';
 import Validation from '../src/utils/Validation/Validation';
+import { MENU } from '../src/constants/constants';
 
 const mockQuestions = inputs => {
   MissionUtils.Console.readLineAsync = jest.fn();
@@ -42,6 +43,17 @@ describe('유효값 확인 class 테스트', () => {
       expect(() => validation.isMenuAlreadyIncluded(list, orderMenuList[index])).toThrowError(
         '[ERROR]',
       );
+    });
+  });
+
+  test('메뉴판에 없는 메뉴가 주문될 시 예외 처리', () => {
+    const orderMenuList = [
+      ['아이크림', '아이스크림'],
+      ['초코', '초코', '아이스'],
+    ];
+
+    orderMenuList.forEach(list => {
+      expect(() => validation.isValidMenuIncluded(list, MENU)).toThrowError('[ERROR]');
     });
   });
 });
