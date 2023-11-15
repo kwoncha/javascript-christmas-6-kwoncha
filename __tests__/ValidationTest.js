@@ -65,4 +65,13 @@ describe('유효값 확인 class 테스트', () => {
       expect(validation.isIncludedComma(string)).toBe(expected[index]);
     });
   });
+
+  test('12월 날짜가 맞는지 확인하는 함수 테스트', () => {
+    const expected = [true, false];
+    const strings = ['1', '123'];
+
+    strings.forEach((date, index) => {
+      expect(validation.isValidDateType(date)).toBe(expected[index]);
+    });
+  });
 });
