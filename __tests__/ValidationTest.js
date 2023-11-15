@@ -74,4 +74,13 @@ describe('유효값 확인 class 테스트', () => {
       expect(validation.isValidDateType(date)).toBe(expected[index]);
     });
   });
+
+  test('주문 형식이 맞는지 확인하는 함수 테스트', () => {
+    const expected = [true, false, false];
+    const strings = ['아이스트-2', '123', 'asdf-3'];
+
+    strings.forEach((menu, index) => {
+      expect(validation.isValidMenuType(menu)).toBe(expected[index]);
+    });
+  });
 });
